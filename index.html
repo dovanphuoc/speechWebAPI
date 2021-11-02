@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-16" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech API</title>
+  </head>
+  <body>
+    <p></p>
+    <script>
+      window.SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition
+      const recognition = new window.SpeechRecognition()
+      recognition.interimResults = true
+      recognition.addEventListener('result', (e) => {
+        const pElement = document.querySelector('p')
+        const text = Array.from(e.results)
+          .map((result) => result[0])
+          .map((result) => result.transcript)
+          .join('')
+        pElement.innerText = text
+      })
+      recognition.addEventListener('end', () => {
+        recognition.start()
+      })
+      recognition.start()
+    </script>
+  </body>
+</html>
